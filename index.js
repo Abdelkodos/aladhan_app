@@ -3,6 +3,7 @@ const cheerio = require('cheerio')
 const express = require('express')
 const app = express()
 
+/* Scraped site URL */
 const url = 'https://www.yabiladi.ma/prieres/'
 
 app.get('/result', (req, res) => {
