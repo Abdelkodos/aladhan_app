@@ -1,24 +1,14 @@
-const fs = require('fs')
-const readline = require('readline')
-const axios = require('axios')
 const cheerio = require('cheerio')
-const express = require('express')
-const app = express()
-const cors = require('cors')
+const axios = require("axios")
 
 /* Scraped site URL */
 const url = 'https://lematin.ma/horaire-priere/'
 
-app.use(cors({
-	origin: '*',
-  optionsSuccessStatus: 200
-}))
-
-app.get('/city/:id', (req, res) => {
-	const { id } = req.params
+function getCityAdhans (req, res) {
+  const id = req.params.id
 
 	const scrapping = async (city) => {
-		await axios(url + city).
+		await axios(`https://lematin.ma/horaire-priere/${city}`).
 					then(response => {
 						const html = response.data
 						const $ = cheerio.load(html)
@@ -137,7 +127,8 @@ app.get('/city/:id', (req, res) => {
 
 		if ( id > 26 || id < 1)
 			res.status(404).send({message : "there is no city with this number"})
-   
-})
+}
 
-app.listen(3000, () => console.log("Yeah I'm Running"))
+module.exports = {
+  getCityAdhans
+}
