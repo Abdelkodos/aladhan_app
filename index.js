@@ -4,72 +4,140 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 const express = require('express')
 const app = express()
+const cors = require('cors')
 
 /* Scraped site URL */
-const url = 'https://www.yabiladi.ma/prieres/'
+const url = 'https://lematin.ma/horaire-priere/'
 
-const saveData = async (content) => {
-	await fs.writeFile('data.json', new Date() + "\n" + content, function (err) {
-		if (err) throw err
-		console.log('Saved!')
-	})
-}
+app.use(cors({
+	origin: '*',
+  optionsSuccessStatus: 200
+}))
 
-const structData = (data) => {
-	let cities = {}
-	if (data.includes(":الرباط"))
-	{
-		cities.rabat = []
-		let cityIndex = data.indexOf(":الرباط")
-		console.log(cityIndex)
-		console.log(data.indexOf("04:36"))
-		console.log(data.indexOf("21:59"))
-/*		for (let i = (cityIndex + 7);
-		cities += '"rabat": ['
-		for ( let i = (cityIndex + 7); i < (cityIndex + 40); i++)
-		{
-			for (let j = i; j < (i + 5); j++)
-			{
-				cities += `"${data.charAt(i) + data.charAt(i+1) + data.charAt(i+2) + data.charAt(i+3) + data.charAt(i+4) + data.charAt(i+5)}"`
-			}
-		}
-		cities += "]}"
-		console.log(cities)*/
+app.get('/city/:id', (req, res) => {
+	const { id } = req.params
+
+	const scrapping = async (city) => {
+		await axios(url + city).
+					then(response => {
+						const html = response.data
+						const $ = cheerio.load(html)
+						const content = []
+	
+						$('.content-ville', html).each(function () {
+							let prays = $(this).find('.col-md-8').children().text()
+							prays = prays.split("\n\n\n\n").join('",\n')
+							prays = prays.split("\n\n\n").join(' "')
+							prays = prays.split("\n\n").join('"')
+							prays = prays.split('\\').join("")
+							prays = prays.split('\"q').join('"')
+							prays = prays.split('A').join('"A')
+							prays = prays.split('""').join('"')
+							prays = prays.split(': "').join('": "')
+							prays = `{"id":${id},"city":"${city}",${prays}}`
+	
+							content.push({
+								prays
+							})
+	
+							res.send(JSON.parse(prays))
+							console.log({prays})
+						})
+					}).catch((err) => console.log(err))
 	}
-}
+	
+		if ( id == 1 ) {
+			scrapping("casablanca")
+		}
+		if ( id == 2 ) {
+			scrapping("rabat")
+		}
+		if ( id == 3 ) {
+			scrapping("fes")
+		}
+				
+		if ( id == 4) {
+				scrapping("tanger")
+			}
+		if ( id == 5 ) {
+			scrapping("marrakech")
+		}
+			
+		if ( id == 6 ) {
+			scrapping("agadir")
+		}
+			
+		if ( id == 7) {
+			scrapping("meknes")
+		}
+			
+		if ( id == 8 ) {
+			scrapping("oujda")
+		}
+			
+		if ( id == 9) {
+			scrapping("laayoune")
+		}
+			
+		if ( id == 10 ) {
+			scrapping("dakhla")
+		}
+			
+		if ( id == 11 ) {
+			scrapping("essaouira")
+		}
+			
+		if ( id == 12 ) {
+			scrapping("temara")
+		}
+			
+		if ( id == 13 ) {
+			scrapping("tetouan")
+		}
+			
+		if ( id == 14 ) {
+			scrapping("alhoceima")
+		}
+			
+		if ( id == 15 )
+			scrapping("benimellal")
 
-const splitString = (content) => {
-	let arrcont = content.split("\t").join("-")
-	arrcont = arrcont.split(" ").join("*")
-	arrcont = arrcont.split("************************").join(":")
-	arrcont = arrcont.split("**-***********\n").join("")
-	arrcont = arrcont.split("---****").join("")
-	arrcont = arrcont.split("---****\n").join("")
-	arrcont = arrcont.split("---***\n").join("")
-	arrcont = arrcont.split("-:").join(":")
-	return arrcont
-}
+		if ( id == 16 )
+			scrapping("nador")
+			
+		if ( id == 17 )
+			scrapping("safi")
+			
+		if ( id == 18 )
+			scrapping("khouribga")
+				
+		if ( id == 19 )
+			scrapping("eljadida")
+				
+		if ( id == 20 )
+			scrapping("berkane")
 
-app.get('/result', (req, res) => {
-    axios(url).
-        then(response => {
-            const html = response.data
-            const $ = cheerio.load(html)
-            const content = []
+		if ( id == 21 )
+			scrapping("taza")
+			
+		if ( id == 22 )
+			scrapping("mohammedia")
+			
+		if ( id == 23 )
+			scrapping("khemisset")
+			
+		if ( id == 24 )
+			scrapping("errachidia")
+			
+		if ( id == 25 )
+			scrapping("kenitra")
+			
+		if ( id == 26 )
+			scrapping("larache")
 
-            $('.corps', html).each(function () {
-
-                const prays = $(this).find('table').children().text()
-                content.push({
-                    prays
-                })
-            })
-	    let praysSaved = "prays: " + splitString(content[0].prays)
-	    console.log(praysSaved)
-	    structData(praysSaved)
-            res.send(praysSaved)
-	    saveData(praysSaved)
-        }).catch((err) => console.log(err))
+		if ( id > 26 || id < 1)
+			res.status(404).send({message : "there is no city with this number"})
+   
 })
 
 app.listen(3000, () => console.log("Yeah I'm Running"))
