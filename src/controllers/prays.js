@@ -115,7 +115,7 @@ const cities = [
 	/* Scraped site URL */
 	const url = 'https://lematin.ma/horaire-priere/'
 
-function getAllAdhans (req, res) {
+async function getAllAdhans (req, res) {
 
 	let result = '['
 
@@ -150,7 +150,7 @@ function getAllAdhans (req, res) {
 	}
 
 	
-Promise.all(
+await Promise.all(
 	[
 		fetch(url+cities[0].name).then(async response => {
 				await scrappingPage(response, cities[0])
