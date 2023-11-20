@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al Adhan App</title>
+</head>
+<body>
+  <script defer>
+    async function getData() {
+      const response = await fetch('http://localhost:3000/prays')
+      const prays = await response.json()
+      console.log(prays)
+      let praysImp = prays.map((pray) => {
+        let prays_times = prays.prays_times
+        return `<ul><li>${pray.city}</li><li>${pray.id}</li></ul>`
+      } )
+      document.getElementById('prays').innerHTML = praysImp
+    }
+
+    getData()
+
+  </script>
+  <h1>Pray data :</h1> <br>
+  <span id="prays"></span>
+</body>
+</html>
