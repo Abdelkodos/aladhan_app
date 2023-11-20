@@ -1,5 +1,6 @@
 	const cheerio = require('cheerio')
 	const axios = require("axios")
+	const fetch = require("node-fetch")
 
 
 	/* Cities and there id */
@@ -115,7 +116,7 @@ const cities = [
 	/* Scraped site URL */
 	const url = 'https://lematin.ma/horaire-priere/'
 
-async function getAllAdhans (req, res) {
+function getAllAdhans (req, res) {
 
 	let result = '['
 
@@ -150,7 +151,7 @@ async function getAllAdhans (req, res) {
 	}
 
 	
-await Promise.all(
+Promise.all(
 	[
 		fetch(url+cities[0].name).then(async response => {
 				await scrappingPage(response, cities[0])
