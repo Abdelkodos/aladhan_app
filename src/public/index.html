@@ -11,9 +11,12 @@
       const response = await fetch('http://localhost:3000/prays')
       const prays = await response.json()
       console.log(prays)
-      let praysImp = prays.map((pray) => {
-        let prays_times = prays.prays_times
-        return `<ul><li>${pray.city}</li><li>${pray.id}</li></ul>`
+      let praysImp = prays.map(async (pray) => {
+        let prays_times = await JSON.parse(prays.prays_times)
+        console.log(prays_times)
+        return `<ul><li>${pray.city}</li><li>${pray.id}</li><li><ul>${prays_times.map((pray_time) => {
+          return `<li>${pray_time.assobh}</li><li>${pray_time.addohr}</li><li>${pray_time.alasr}</li>`
+        })}</ul></li></ul>`
       } )
       document.getElementById('prays').innerHTML = praysImp
     }

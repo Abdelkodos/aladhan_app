@@ -1,6 +1,9 @@
-	const cheerio = require('cheerio')
-	const axios = require("axios")
-	const fetch = require("node-fetch")
+	// const cheerio = require('cheerio')
+	// const axios = require("axios")
+	// const fetch = require("node-fetch")
+	import cheerio from 'cheerio'
+	import axios from "axios"
+	import fetch from "node-fetch"
 
 
 	/* Cities and there id */
@@ -112,12 +115,12 @@ const cities = [
 ]
 
 
+/* Scraped site URL */
+		const url = 'https://lematin.ma/horaire-priere/'
+	
 
-	/* Scraped site URL */
-	const url = 'https://lematin.ma/horaire-priere/'
-
-function getAllAdhans (req, res) {
-
+const getAllAdhans = (req, res) => {
+	
 	let result = '['
 
 	const scrappingPage = async (response, city) => {
@@ -135,9 +138,10 @@ function getAllAdhans (req, res) {
 								prays = prays.split("\n\n").join('"')
 								prays = prays.split('\\').join("")
 								prays = prays.split('\"q').join('"')
-								prays = prays.split('A').join('"A')
+								prays = prays.split('A').join('"a')
 								prays = prays.split('""').join('"')
 								prays = prays.split(': "').join('": "')
+								prays = prays.split('-').join('')
 								prays = `{"id":${city.id},"city":"${city.name}","prays_times": {${prays}}}`
 								// let serverRec = JSON.parse(prays)
 								// response = JSON.parse(prays)
@@ -244,7 +248,7 @@ res.send(JSON.parse(result))
 	
 }
 
-function getAdhanByCityId (req, res) {
+const getAdhanByCityId = (req, res) => {
   const id = req.params.id
 	
 
@@ -261,9 +265,10 @@ function getAdhanByCityId (req, res) {
 							prays = prays.split("\n\n").join('"')
 							prays = prays.split('\\').join("")
 							prays = prays.split('\"q').join('"')
-							prays = prays.split('A').join('"A')
+							prays = prays.split('A').join('"a')
 							prays = prays.split('""').join('"')
 							prays = prays.split(': "').join('": "')
+							prays = prays.split('-').join('')
 							prays = `{"id":${id},"city":"${city}","prays_times": {${prays}}}`
 							let serverRec = JSON.parse(prays)
 
@@ -366,7 +371,7 @@ function getAdhanByCityId (req, res) {
 			res.status(404).send({message : "there is no city with this number"})
 }
 
-module.exports = {
-  getAdhanByCityId,
-	getAllAdhans
+
+export {
+	getAllAdhans, getAdhanByCityId
 }
