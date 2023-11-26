@@ -10,20 +10,30 @@
     async function getData() {
       const response = await fetch('http://localhost:3000/prays')
       const prays = await response.json()
-      console.log(prays)
-      let praysImp = prays.map(async (pray) => {
-        let prays_times = await JSON.parse(prays.prays_times)
+      await prays.map(async (pray) => {
+        let prays_times = await pray.prays_times
         console.log(prays_times)
-        return `<ul><li>${pray.city}</li><li>${pray.id}</li><li><ul>${prays_times.map((pray_time) => {
-          return `<li>${pray_time.assobh}</li><li>${pray_time.addohr}</li><li>${pray_time.alasr}</li>`
-        })}</ul></li></ul>`
+        document.getElementById('prays').innerHTML += `<ul class="pray"><li><h2>${pray.city}</h2></li><li><ol><li>${pray.prays_times.assobh} : الصبح</li><li>${pray.prays_times.addohr} : الظهر</li><li>${pray.prays_times.alasr} : العصر </li><li>${pray.prays_times.almaghrib} : المغرب</li><li style="margin-right: 50px">${pray.prays_times.alichae} : العشاء </li></ol></li></ul>`
       } )
-      document.getElementById('prays').innerHTML = praysImp
+      
     }
 
     getData()
 
   </script>
+  <style>
+    #prays {
+      display: flex;
+      margin: 15px;
+      color: brown;
+      width: 80vw;
+      height: 30vh;
+    }
+
+    #prays .pray {
+      margin: 25px;
+    }
+  </style>
   <h1>Pray data :</h1> <br>
   <span id="prays"></span>
 </body>
