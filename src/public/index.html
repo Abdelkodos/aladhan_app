@@ -13,7 +13,22 @@
       await prays.map(async (pray) => {
         let prays_times = await pray.prays_times
         console.log(prays_times)
-        document.getElementById('prays').innerHTML += `<ul class="pray"><li><h2>${pray.city}</h2></li><li><ol><li>${pray.prays_times.assobh} : الصبح</li><li>${pray.prays_times.addohr} : الظهر</li><li>${pray.prays_times.alasr} : العصر </li><li>${pray.prays_times.almaghrib} : المغرب</li><li style="margin-right: 50px">${pray.prays_times.alichae} : العشاء </li></ol></li></ul>`
+        document.getElementById('prays').innerHTML += `<div class="pray">
+                                                        <ul>
+                                                          <li>
+                                                            <h2>${pray.city}</h2>
+                                                          </li>
+                                                          <li>
+                                                            <ol>
+                                                              <li> الصبح : ${pray.prays_times.assobh}</li>
+                                                              <li> الظهر : ${pray.prays_times.addohr}</li>
+                                                              <li> العصر : ${pray.prays_times.alasr}</li>
+                                                              <li> المغرب : ${pray.prays_times.almaghrib}</li>
+                                                              <li> العشاء : ${pray.prays_times.alichae}</li>
+                                                            </ol>
+                                                          </li>
+                                                        </ul>
+                                                      </div>`
       } )
       
     }
@@ -24,14 +39,18 @@
   <style>
     #prays {
       display: flex;
-      margin: 15px;
       color: brown;
-      width: 80vw;
-      height: 30vh;
     }
 
-    #prays .pray {
+    .pray {
       margin: 25px;
+      display: inline-block;
+      padding: 10px;
+      border: .5px solid brown;
+    }
+
+    .pray ul ol  li{
+      display: flex;
     }
   </style>
   <h1>Pray data :</h1> <br>
