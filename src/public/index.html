@@ -1,59 +1,185 @@
-<!DOCTYPE html>
+<!DOCTYPE html5>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Al Adhan App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SALATI</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .pray {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        .pray h2 {
+            color: #007bff;
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .pray ol {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        ol, ul {
+            margin-bottom: 5px;
+            list-style: none;
+        }
+
+        #search {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+    </style>
 </head>
 <body>
-  <script defer>
-    async function getData() {
-      const response = await fetch('https://adhannmorocco.onrender.com/prays')
-      const prays = await response.json()
-      await prays.map(async (pray) => {
-        let prays_times = await pray.prays_times
-        console.log(prays_times)
-        document.getElementById('prays').innerHTML += `<div class="pray">
-                                                        <ul>
-                                                          <li>
-                                                            <h2>${pray.city}</h2>
-                                                          </li>
-                                                          <li>
-                                                            <ol>
-                                                              <li> الصبح : ${pray.prays_times.assobh}</li>
-                                                              <li> الظهر : ${pray.prays_times.addohr}</li>
-                                                              <li> العصر : ${pray.prays_times.alasr}</li>
-                                                              <li> المغرب : ${pray.prays_times.almaghrib}</li>
-                                                              <li> العشاء : ${pray.prays_times.alichae}</li>
-                                                            </ol>
-                                                          </li>
-                                                        </ul>
-                                                      </div>`
-      } )
+    <h1>SALATI</h1>
+    <div id="search">
+        <label for="city">Entrez le nom de la ville :</label>
+        <input type="text" id="city">
+        <button onclick="searchCity()">Rechercher</button>
+    </div>
+    <div id="prayer-container"></div>
+    
+    <script>
+
+      let cities;
+
+      function comparerVilles(a, b) {
+        if (a.city < b.city) {
+            return -1;
+        }
+        if (a.city > b.city) {
+            return 1;
+        }
+        return 0;
+    }
+
+
+      async function getData() {
+         let data = await fetch("https://adhannmorocco.onrender.com/prays").then(data => data.json());
+         cities = data.sort(comparerVilles);
+         await localStorage.setItem('prays', JSON.stringify(data));
+         await console.table(JSON.parse(localStorage.getItem('prays')));
+         let prays = JSON.parse(localStorage.getItem('prays'));
+
+         prays.map((pray) => {
+            let city = pray.city;
+            let cityCap = city.charAt(0).toUpperCase() + city.slice(1);
+            document.getElementById("prayer-container").innerHTML += `<div class="pray">
+                <ul>
+                    <li>
+                        <h2>${cityCap}</h2>
+                    </li>
+                    <li>
+                      <img src="./${city}.png" width="300" alt="${cityCap}">
+                    </li>
+                    <li>
+                        <ol>
+                            <li> الصبح : ${pray.prays_times.assobh}</li>
+                            <li> الظهر : ${pray.prays_times.addohr}</li>
+                            <li> العصر : ${pray.prays_times.alasr}</li>
+                            <li> المغرب : ${pray.prays_times.almaghrib}</li>
+                            <li> العشاء : ${pray.prays_times.alichae}</li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>`;
+         });
+      }
+
+      getData();
+
+      function searchCity() {
+        let inputCity = document.getElementById('city').value.toLowerCase();
+        let city = cities.find((city) => city.city.toLowerCase().includes(inputCity));
+        if (city) {
+            let cityCap = city.city.charAt(0).toUpperCase() + city.city.slice(1);
+            document.getElementById("prayer-container").innerHTML = `<div class="pray">
+                <ul>
+                    <li>
+                        <h2>${cityCap}</h2>
+                    </li>
+                    <li>
+                      <img src="./${city}.png" width="300" alt="${cityCap}">
+                    </li>
+                    <li>
+                        <ol>
+                            <li> الصبح : ${city.prays_times.assobh}</li>
+                            <li> الظهر : ${city.prays_times.addohr}</li>
+                            <li> العصر : ${city.prays_times.alasr}</li>
+                            <li> المغرب : ${city.prays_times.almaghrib}</li>
+                            <li> العشاء : ${city.prays_times.alichae}</li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>`;
+        } else {
+            alert("Ville non trouvée. Veuillez réessayer avec un autre nom de ville.");
+        }
+      }
+
+        function ajouterPriere() {
+            // Récupérer les valeurs des champs de saisie
+            let ville = document.getElementById("city").value;
+            let fajr = document.getElementById("fajr").value;
+            let dhuhr = document.getElementById("dhuhr").value;
+            let asr = document.getElementById("asr").value;
+            let maghrib = document.getElementById("maghrib").value;
+            let isha = document.getElementById("isha").value;
+
+            // Créer un objet pour stocker les temps de prière
+            let tempsPriere = {
+                ville: ville,
+                fajr: fajr,
+                dhuhr: dhuhr,
+                asr: asr,
+                maghrib: maghrib,
+                isha: isha
+            };
+
+            // Vous pouvez stocker cet objet dans une base de données ou un autre emplacement
+            console.log("Temps de prière ajouté pour la ville de " + ville + " : ", tempsPriere);
+            alert("Temps de prière ajouté avec succès pour la ville de " + ville);
+        }
+        </script>
       
-    }
+    <h1>Ajouter les temps de prière pour votre ville</h1>
+    <label for="city">Nom de la ville :</label>
+    <input type="text" id="city">
+    <label for="fajr">Temps de Fajr :</label>
+    <input type="text" id="fajr">
+    <label for="dhuhr">Temps de Dhuhr :</label>
+    <input type="text" id="dhuhr">
+    <label for="asr">Temps de Asr :</label>
+    <input type="text" id="asr">
+    <label for="maghrib">Temps de Maghrib :</label>
+    <input type="text" id="maghrib">
+    <label for="isha">Temps de Isha :</label>
+    <input type="text" id="isha">
+    <button onclick="ajouterPriere()">Ajouter</button>
 
-    getData()
+    
 
-  </script>
-  <style>
-    #prays {
-      display: flex;
-      color: brown;
-    }
-
-    .pray {
-      margin: 25px;
-      display: inline-block;
-      padding: 10px;
-      border: .5px solid brown;
-    }
-
-    .pray ul ol  li{
-      display: flex;
-    }
-  </style>
-  <h1>Pray data :</h1> <br>
-  <span id="prays"></span>
 </body>
 </html>

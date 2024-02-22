@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al Adhan App</title>
+</head>
+<body>
+  <script defer>
+    async function getData() {
+      const response = await fetch('https://adhannmorocco.onrender.com/prays')
+      const prays = await response.json()
+      await prays.map(async (pray) => {
+        let prays_times = await pray.prays_times
+        console.log(prays_times)
+        document.getElementById('prays').innerHTML += `<div class="pray">
+                                                        <ul>
+                                                          <li>
+                                                            <h2>${pray.city}</h2>
+                                                          </li>
+                                                          <li>
+                                                            <ol>
+                                                              <li> الصبح : ${pray.prays_times.assobh}</li>
+                                                              <li> الظهر : ${pray.prays_times.addohr}</li>
+                                                              <li> العصر : ${pray.prays_times.alasr}</li>
+                                                              <li> المغرب : ${pray.prays_times.almaghrib}</li>
+                                                              <li> العشاء : ${pray.prays_times.alichae}</li>
+                                                            </ol>
+                                                          </li>
+                                                        </ul>
+                                                      </div>`
+      } )
+      
+    }
+
+    getData()
+
+  </script>
+  <style>
+    #prays {
+      display: flex;
+      color: brown;
+    }
+
+    .pray {
+      margin: 25px;
+      display: inline-block;
+      padding: 10px;
+      border: .5px solid brown;
+    }
+
+    .pray ul ol li{
+      display: flex;
+    }
+  </style>
+  <h1>Pray data :</h1> <br>
+  <span id="prays"></span>
+</body>
+</html>

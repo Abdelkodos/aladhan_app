@@ -4,6 +4,7 @@
 	import cheerio from 'cheerio'
 	import axios from "axios"
 	import fetch from "node-fetch"
+	import fs from "node:fs"
 
 
 	/* Cities and there id */
@@ -239,10 +240,19 @@ Promise.all(
 ).then(() => {
 // result -= ','
 // result += ']'
+
 result = result.split("}}{").join('}},{')
 result += ']'
 console.dir(JSON.parse(result))
+fs.writeFile('src/data.json', result, (err) => {
+	if (err) {
+		return console.error(err)
+	}
+
+	console.log('data written successfully')
+})
 res.send(JSON.parse(result))
+
 })
 		
 	
