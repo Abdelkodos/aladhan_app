@@ -2,9 +2,10 @@ import { getAllAdhans, getAdhanByCityId } from './controllers/prays.js'
 import express from 'express'
 import cors from 'cors'
 import { fileURLToPath } from 'url'
+import { readFileSync } from 'fs'
 import path from 'path'
-import data2 from '../second_data.json' assert { type: 'json' }
 
+const data2 = JSON.parse(readFileSync(new URL('./second_data.json', import.meta.url)))
 const app = express()
 
 app.use(cors({
