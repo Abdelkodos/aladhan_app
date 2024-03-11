@@ -1,0 +1,92 @@
+{
+  "prestations": [
+    {
+      "id": 1,
+      "prestation": "Crédit IMTILAK",
+      "status": "accepted",
+      "price": 280000
+    },
+    {
+      "id": 2,
+      "prestation": "Crédit YASSIR",
+      "status": "inProgress",
+      "price": 20000
+    },
+    {
+      "id": 3,
+      "prestation": "Aide au Préscolaire",
+      "status": "refused",
+      "price": "Hayat BEN ALLA"
+    },
+    {
+      "id": 4,
+      "prestation": "Pèlerinage",
+      "status": "inProgress",
+      "price": "Ahmed BEN ALLA"
+    },
+    {
+      "id": 5,
+      "prestation": "Fond de soutien",
+      "status": "inProgress",
+      "price": "Ahmed BEN ALLA"
+    },
+    {
+      "id": 6,
+      "prestation": "Nafida 2 (Internet)",
+      "status": "accepted",
+      "price": "Ahmed BEN ALLA"
+    },
+    {
+      "id": 7,
+      "prestation": "Nafida 2 (Subvention)",
+      "status": "attended",
+      "price": "Ahmed BEN ALLA"
+    },
+    {
+      "id": 8,
+      "prestation": "Bourse d'étude",
+      "status": "inProgress",
+      "price": "Salah BEN ALLA"
+    }
+  ],
+  "reclamations": [
+    {
+      "id": 1,
+      "reclamation": "Réclamation",
+      "status": "inProgress",
+      "price": "Préscolaire"
+    },
+    {
+      "id": 2,
+      "reclamation": "Réclamation",
+      "status": "accepted",
+      "price": "ONCF"
+    },
+    {
+      "id": 3,
+      "reclamation": "Réclamation",
+      "status": "accepted",
+      "price": "Transport Sanitaire"
+    }
+  ],
+  "informations": [
+    {
+      "id": 1,
+      "information": "Information",
+      "status": "inProgress",
+      "price": "Préscolaire"
+    },
+    {
+      "id": 2,
+      "information": "Information",
+      "status": "accepted",
+      "price": "YASSIR"
+    },
+    {
+      "id": 3,
+      "information": "Information",
+      "status": "accepted",
+      "price": "IMTILAK"
+    }
+  ]
+}

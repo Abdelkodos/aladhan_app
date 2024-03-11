@@ -155,7 +155,6 @@ const getAllAdhans = (req, res) => {
 							})
 	}
 
-	
 Promise.all(
 	[
 		fetch(url+cities[0].name).then(async response => {

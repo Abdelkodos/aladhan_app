@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import { fileURLToPath } from 'url'
 import path from 'path'
+import data2 from '../second_data.json' assert { type: 'json' }
 
 const app = express()
 
@@ -19,5 +20,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.get("/prays", getAllAdhans)
 app.get('/prays/:id', getAdhanByCityId)
+app.get('/data', (req, res) => {
+	res.json(data2)
+})
 
 app.listen(3000, () => console.log("Yeah I'm Running"))
