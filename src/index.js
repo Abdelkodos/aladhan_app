@@ -9,8 +9,16 @@ const data = JSON.parse(readFileSync(new URL('./second_data.json', import.meta.u
 const users = JSON.parse(readFileSync(new URL('./users.json', import.meta.url)))
 const app = express()
 
-const getUser = id => users.map((user) => user.userId == id ? user : null )
-const getData = id => data.map((data) => data.userId == id ? data : null )
+const getUser = id => {
+	const user = users.map((user) => user.userId == id ? user : undefined )
+	return user[0]
+}
+
+const getData = id => {
+	const res = data.map((data) => data.userId == id ? data : undefined )
+	return res[0]
+}
+	
 
 app.use(cors({
 	origin: '*',

@@ -8,5 +8,15 @@
     "phoneNumber": [ 678901234, 645678901 ],
     "email": "ba.ahmed@gmail.com",
     "birthday": "18/11/1980"
+  },
+  {
+    "userId": 167898,
+    "fullName": "Ahmed BEN ALLA",
+    "arName": "أحمد بن علة",
+    "status": "valid",
+    "gender": "male",
+    "phoneNumber": [ 678901234, 645678901 ],
+    "email": "ba.ahmed@gmail.com",
+    "birthday": "18/11/1980"
   }
 ]
