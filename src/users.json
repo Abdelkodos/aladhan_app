@@ -7,7 +7,8 @@
     "gender": "male",
     "phoneNumber": [ 678901234, 645678901 ],
     "email": "ba.ahmed@gmail.com",
-    "birthday": "18/11/1980"
+    "birthday": "18/11/1980",
+    "city": "salé"
   },
   {
     "userId": 167898,
