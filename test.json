@@ -1,0 +1,80 @@
+{
+  "adherent": {
+    "adresseDeResidence": "<string>",
+    "adresseDeResidenceArabe": "<string>",
+    "adresseDeTravail": "<string>",
+    "cin": "<string>",
+    "commentaire": "<string>",
+    "dateCreation": "<date>",
+    "dateMiseAjour": "<date>",
+    "dateNaissance": "<date>",
+    "email": "<string>",
+    "genre": "<string>",
+    "gsm": "<string>",
+    "idMainAdherent": "<uuid>",
+    "isProfilValide": "<boolean>",
+    "lieuDeResidence": "<string>",
+    "lieuDeTravail": "<string>",
+    "nom": "<string>",
+    "nomArabe": "<string>",
+    "numeroAdherent": "<string>",
+    "numeroPpr": "<string>",
+    "prenom": "<string>",
+    "prenomArabe": "<string>",
+    "refCommuneByIdRefCommuneResidence": {
+      "code": "<string>",
+      "idRefCommune": "<integer>",
+      "refDirectionProvincial": {
+        "code": "<string>",
+        "idRefDirectionProvincial": "<integer>",
+        "refRegion": {
+          "code": "<string>",
+          "idRefRegion": "<integer>",
+          "titre": "<string>",
+          "titreArabe": "<string>"
+        },
+        "titre": "<string>",
+        "titreArabe": "<string>"
+      },
+      "titre": "<string>",
+      "titreArabe": "<string>"
+    },
+    "refCommuneByIdRefCommuneTravail": {
+      "code": "<string>",
+      "idRefCommune": "<integer>",
+      "refDirectionProvincial": {
+        "code": "<string>",
+        "idRefDirectionProvincial": "<integer>",
+        "refRegion": {
+          "code": "<string>",
+          "idRefRegion": "<integer>",
+          "titre": "<string>",
+          "titreArabe": "<string>"
+        },
+        "titre": "<string>",
+        "titreArabe": "<string>"
+      },
+      "titre": "<string>",
+      "titreArabe": "<string>"
+    },
+    "rib": "<string>",
+    "situationFamiliale": {
+      "code": "<string>",
+      "idSituationFamiliale": "<integer>",
+      "titre": "<string>",
+      "titreArabe": "<string>"
+    },
+    "telephone": "<string>",
+    "typeAdherent": {
+      "code": "<string>",
+      "idTypeAdherent": "<integer>",
+      "titre": "<string>",
+      "titreArabe": "<string>"
+    }
+  },
+  "ancienRib": "<string>",
+  "dateEffet": "<date>",
+  "idAdherentRib": "<integer>",
+  "modifierPar": "<string>",
+  "rib": "<string>"
+}
